@@ -18,6 +18,9 @@ public final class ImageViewerController: UIViewController {
         self.configuration = configuration
         super.init(nibName: String(describing: type(of: self)), bundle: Bundle(for: type(of: self)))
         
+        let imgView = YYAnimatedImageView()
+        
+        print(imgView)
         modalPresentationStyle = .overFullScreen
         modalTransitionStyle = .crossDissolve
         modalPresentationCapturesStatusBarAppearance = true
