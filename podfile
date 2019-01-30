@@ -1,14 +1,10 @@
 platform:ios,'9.0'
 use_frameworks!
 
-def gif
+target 'Example' do
     pod 'YYImage', '~> 1.0.4'
 end
 
-target 'Example' do
-    gif
-end
-
 target 'SimpleImageViewer' do
-    gif
+    pod 'YYImage', '~> 1.0.4'
 end
