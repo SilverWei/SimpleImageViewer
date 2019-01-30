@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.name = "SimpleImageViewer"
   s.summary = "A snappy image viewer with zoom and interactive dismissal transition."
-  spec.dependency 'YYImage', '~> 1.0.4'
+  s.dependency 'YYImage', '~> 1.0.4'
   s.requires_arc = true
   s.version = "1.1.1"
   s.license = { :type => "MIT", :file => "LICENSE" }
