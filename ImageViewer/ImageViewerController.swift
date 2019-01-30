@@ -1,5 +1,6 @@
 import UIKit
 import AVFoundation
+import YYImage
 
 public final class ImageViewerController: UIViewController {
     @IBOutlet fileprivate var scrollView: UIScrollView!
