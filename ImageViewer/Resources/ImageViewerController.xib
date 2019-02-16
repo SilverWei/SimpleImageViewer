@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageViewerController" customModule="SimpleImageViewer" customModuleProvider="target">
             <connections>
                 <outlet property="activityIndicator" destination="oPl-2f-Knx" id="GOD-eG-o96"/>
+                <outlet property="downloadButton" destination="ixs-Rb-9JI" id="AyN-m1-1GB"/>
                 <outlet property="imageView" destination="rHA-5m-kkS" id="V86-k1-pPH"/>
                 <outlet property="navigationBar" destination="jM6-4y-iSd" id="cGQ-gh-skL"/>
                 <outlet property="navigationBarView" destination="qe6-Ap-Iit" id="CDc-mI-vdo"/>

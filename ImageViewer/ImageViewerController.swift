@@ -8,6 +8,7 @@ public final class ImageViewerController: UIViewController {
     @IBOutlet fileprivate var activityIndicator: UIActivityIndicatorView!
     @IBOutlet fileprivate var navigationBar: UINavigationBar!
     @IBOutlet fileprivate var navigationBarView: UIView!
+    @IBOutlet fileprivate var downloadButton: UIButton!
     
     fileprivate var transitionHandler: ImageViewerTransitioningHandler?
     fileprivate let configuration: ImageViewerConfiguration?
@@ -127,7 +128,7 @@ private extension ImageViewerController {
     
     
     @IBAction func downloadButton_touchUp() {
-        configuration?.downloadButton_action?()
+        configuration?.downloadButton_action?(downloadButton)
     }
     
     @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
