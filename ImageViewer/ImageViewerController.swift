@@ -21,6 +21,10 @@ public final class ImageViewerController: UIViewController {
         modalPresentationCapturesStatusBarAppearance = true
     }
     
+    public override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
