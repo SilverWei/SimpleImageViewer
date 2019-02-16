@@ -12,10 +12,6 @@ public final class ImageViewerController: UIViewController {
     fileprivate var transitionHandler: ImageViewerTransitioningHandler?
     fileprivate let configuration: ImageViewerConfiguration?
     
-//    public override var prefersStatusBarHidden: Bool {
-//        return true
-//    }
-    
     public init(configuration: ImageViewerConfiguration?) {
         self.configuration = configuration
         super.init(nibName: String(describing: type(of: self)), bundle: Bundle(for: type(of: self)))
@@ -86,9 +82,16 @@ private extension ImageViewerController {
     
     func setupGestureRecognizers() {
         let tapGestureRecognizer = UITapGestureRecognizer()
-        tapGestureRecognizer.numberOfTapsRequired = 2
-        tapGestureRecognizer.addTarget(self, action: #selector(imageViewDoubleTapped))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        tapGestureRecognizer.addTarget(self, action: #selector(imageViewTapped(_:)))
         imageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        let doubleTapGestureRecognizer = UITapGestureRecognizer()
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        doubleTapGestureRecognizer.addTarget(self, action: #selector(imageViewDoubleTapped))
+        imageView.addGestureRecognizer(doubleTapGestureRecognizer)
+        
+        tapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
         
         let panGestureRecognizer = UIPanGestureRecognizer()
         panGestureRecognizer.addTarget(self, action: #selector(imageViewPanned(_:)))
@@ -121,6 +124,19 @@ private extension ImageViewerController {
     
     @IBAction func downloadButton_touchUp() {
         configuration?.downloadButton_action?()
+    }
+    
+    @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
+        if navigationBarView.alpha == 1.0 || navigationBarView.alpha == 0.0 {
+            UIView.animate(withDuration: 0.2, animations: {
+                if self.navigationBarView.alpha == 0.0 {
+                    self.navigationBarView.alpha = 1.0
+                }
+                else {
+                    self.navigationBarView.alpha = 0.0
+                }
+            })
+        }
     }
     
     @objc func imageViewDoubleTapped(recognizer: UITapGestureRecognizer) {
