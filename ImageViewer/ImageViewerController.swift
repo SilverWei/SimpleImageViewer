@@ -40,10 +40,6 @@ public final class ImageViewerController: UIViewController {
         setupTransitions()
         setupActivityIndicator()
     }
-    
-    public override func viewDidAppear(_ animated: Bool) {
-        appearNavigationBar()
-    }
 }
 
 extension ImageViewerController: UIScrollViewDelegate {
@@ -70,13 +66,6 @@ private extension ImageViewerController {
     func setupNavigationBar() {
         navigationBarView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationBarView.alpha = 0.0
-    }
-    
-    func appearNavigationBar() {
-        UIView.animate(withDuration: 0.2) {
-            self.navigationBarView.alpha = 1.0
-        }
     }
     
     func setupScrollView() {
