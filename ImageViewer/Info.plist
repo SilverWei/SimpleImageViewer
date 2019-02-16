@@ -29,6 +29,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<true/>
 </dict>
 </plist>
