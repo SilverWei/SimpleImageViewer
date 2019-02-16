@@ -90,16 +90,6 @@
                         <constraint firstItem="jM6-4y-iSd" firstAttribute="leading" secondItem="qe6-Ap-Iit" secondAttribute="leading" id="eJF-Ax-zHi"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wsy-fe-raz">
-                    <rect key="frame" x="0.0" y="20" width="44" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="bXU-O2-lam"/>
-                        <constraint firstAttribute="width" constant="44" id="xTg-TJ-eL3"/>
-                    </constraints>
-                    <state key="normal" image="closeButton">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -108,9 +98,7 @@
                 <constraint firstItem="qe6-Ap-Iit" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2la-u8-FUA"/>
                 <constraint firstItem="oPl-2f-Knx" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="4hr-Ua-OMa"/>
                 <constraint firstItem="cQD-2Q-pvo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ErM-q5-uey"/>
-                <constraint firstItem="Wsy-fe-raz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="GNz-6j-kdf"/>
                 <constraint firstItem="Q91-AY-cZC" firstAttribute="top" secondItem="jM6-4y-iSd" secondAttribute="top" id="Iq2-ZG-iIS"/>
-                <constraint firstItem="Wsy-fe-raz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="Tze-CU-2Ab"/>
                 <constraint firstItem="rHA-5m-kkS" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="Zh5-4A-UbJ"/>
                 <constraint firstAttribute="trailing" secondItem="cQD-2Q-pvo" secondAttribute="trailing" id="fiR-iH-AGe"/>
                 <constraint firstAttribute="bottom" secondItem="cQD-2Q-pvo" secondAttribute="bottom" id="kQk-Ie-iGl"/>
@@ -119,17 +107,11 @@
                 <constraint firstItem="rHA-5m-kkS" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="tGF-Ia-4A0"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q91-AY-cZC"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="Wsy-fe-raz"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="42.399999999999999" y="82.3088455772114"/>
         </view>
     </objects>
     <resources>
         <image name="back" width="13" height="22"/>
-        <image name="closeButton" width="13" height="13"/>
         <image name="ic_share_white" width="21" height="22"/>
     </resources>
 </document>
