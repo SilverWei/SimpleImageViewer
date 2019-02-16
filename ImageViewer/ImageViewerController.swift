@@ -4,11 +4,15 @@ import YYImage
 
 public final class ImageViewerController: UIViewController {
     @IBOutlet fileprivate var scrollView: UIScrollView!
-    @IBOutlet fileprivate var imageView: UIImageView!
+    @IBOutlet fileprivate var imageView: YYAnimatedImageView!
     @IBOutlet fileprivate var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet fileprivate var navigationBar: UINavigationBar!
+    @IBOutlet fileprivate var navigationBarView: UIView!
     
     fileprivate var transitionHandler: ImageViewerTransitioningHandler?
     fileprivate let configuration: ImageViewerConfiguration?
+    
+    public var downloadButton_action: (() -> Void)?
     
     public override var prefersStatusBarHidden: Bool {
         return true
@@ -18,9 +22,6 @@ public final class ImageViewerController: UIViewController {
         self.configuration = configuration
         super.init(nibName: String(describing: type(of: self)), bundle: Bundle(for: type(of: self)))
         
-        let imgView = YYAnimatedImageView()
-        
-        print(imgView)
         modalPresentationStyle = .overFullScreen
         modalTransitionStyle = .crossDissolve
         modalPresentationCapturesStatusBarAppearance = true
@@ -34,10 +35,15 @@ public final class ImageViewerController: UIViewController {
         super.viewDidLoad()
         imageView.image = configuration?.imageView?.image ?? configuration?.image
         
+        setupNavigationBar()
         setupScrollView()
         setupGestureRecognizers()
         setupTransitions()
         setupActivityIndicator()
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        appearNavigationBar()
     }
 }
 
@@ -62,6 +68,18 @@ extension ImageViewerController: UIGestureRecognizerDelegate {
 }
 
 private extension ImageViewerController {
+    func setupNavigationBar() {
+        navigationBarView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBarView.alpha = 0.0
+    }
+    
+    func appearNavigationBar() {
+        UIView.animate(withDuration: 0.2) {
+            self.navigationBarView.alpha = 1.0
+        }
+    }
+    
     func setupScrollView() {
         scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
         scrollView.alwaysBounceVertical = true
@@ -100,6 +118,11 @@ private extension ImageViewerController {
     
     @IBAction func closeButtonPressed() {
         dismiss(animated: true)
+    }
+    
+    
+    @IBAction func downloadButton_touchUp() {
+        downloadButton_action?()
     }
     
     @objc func imageViewDoubleTapped(recognizer: UITapGestureRecognizer) {

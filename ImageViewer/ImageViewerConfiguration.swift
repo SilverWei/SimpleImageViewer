@@ -1,12 +1,13 @@
 import Foundation
 import UIKit
+import YYImage
 
-public typealias ImageCompletion = (UIImage?) -> Void
+public typealias ImageCompletion = (YYImage?) -> Void
 public typealias ImageBlock = (@escaping ImageCompletion) -> Void
 
 public final class ImageViewerConfiguration {
-    public var image: UIImage?
-    public var imageView: UIImageView?
+    public var image: YYImage?
+    public var imageView: YYAnimatedImageView?
     public var imageBlock: ImageBlock?
     
     public typealias ConfigurationClosure = (ImageViewerConfiguration) -> ()

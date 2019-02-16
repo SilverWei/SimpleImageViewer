@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,6 +14,8 @@
             <connections>
                 <outlet property="activityIndicator" destination="oPl-2f-Knx" id="GOD-eG-o96"/>
                 <outlet property="imageView" destination="rHA-5m-kkS" id="V86-k1-pPH"/>
+                <outlet property="navigationBar" destination="jM6-4y-iSd" id="cGQ-gh-skL"/>
+                <outlet property="navigationBarView" destination="qe6-Ap-Iit" id="CDc-mI-vdo"/>
                 <outlet property="scrollView" destination="cQD-2Q-pvo" id="M6k-QU-OVY"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bEt-1B-b5l"/>
             </connections>
@@ -25,7 +28,7 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" maximumZoomScale="6" translatesAutoresizingMaskIntoConstraints="NO" id="cQD-2Q-pvo">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
-                        <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rHA-5m-kkS">
+                        <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rHA-5m-kkS" customClass="YYAnimatedImageView">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
@@ -43,6 +46,50 @@
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="oPl-2f-Knx">
                     <rect key="frame" x="169" y="315" width="37" height="37"/>
                 </activityIndicatorView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qe6-Ap-Iit">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                    <subviews>
+                        <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jM6-4y-iSd">
+                            <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                            <items>
+                                <navigationItem id="BlG-42-81e">
+                                    <barButtonItem key="leftBarButtonItem" title="Back" image="back" style="plain" id="7Ot-v6-lsL">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XKE-c5-zya">
+                                            <rect key="frame" x="16" y="11" width="58" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title=" Back" image="back">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="closeButtonPressed" destination="-1" eventType="touchUpInside" id="e6t-iW-zPf"/>
+                                            </connections>
+                                        </button>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </barButtonItem>
+                                    <barButtonItem key="rightBarButtonItem" style="plain" id="pGQ-0f-TnQ">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ixs-Rb-9JI">
+                                            <rect key="frame" x="338" y="11" width="21" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="ic_share_white"/>
+                                            <connections>
+                                                <action selector="downloadButton_touchUp" destination="-1" eventType="touchUpInside" id="sni-OF-FNY"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                </navigationItem>
+                            </items>
+                        </navigationBar>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="jM6-4y-iSd" secondAttribute="trailing" id="4pF-G5-pEl"/>
+                        <constraint firstAttribute="bottom" secondItem="jM6-4y-iSd" secondAttribute="bottom" id="O8o-CG-vWZ"/>
+                        <constraint firstItem="jM6-4y-iSd" firstAttribute="leading" secondItem="qe6-Ap-Iit" secondAttribute="leading" id="eJF-Ax-zHi"/>
+                    </constraints>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wsy-fe-raz">
                     <rect key="frame" x="0.0" y="20" width="44" height="44"/>
                     <constraints>
@@ -52,16 +99,17 @@
                     <state key="normal" image="closeButton">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <connections>
-                        <action selector="closeButtonPressed" destination="-1" eventType="touchUpInside" id="jwg-86-OJF"/>
-                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="qe6-Ap-Iit" firstAttribute="leading" secondItem="Q91-AY-cZC" secondAttribute="leading" id="0lB-4K-COT"/>
+                <constraint firstItem="qe6-Ap-Iit" firstAttribute="trailing" secondItem="Q91-AY-cZC" secondAttribute="trailing" id="1Uh-VY-Nyb"/>
+                <constraint firstItem="qe6-Ap-Iit" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2la-u8-FUA"/>
                 <constraint firstItem="oPl-2f-Knx" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="4hr-Ua-OMa"/>
                 <constraint firstItem="cQD-2Q-pvo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ErM-q5-uey"/>
                 <constraint firstItem="Wsy-fe-raz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="GNz-6j-kdf"/>
+                <constraint firstItem="Q91-AY-cZC" firstAttribute="top" secondItem="jM6-4y-iSd" secondAttribute="top" id="Iq2-ZG-iIS"/>
                 <constraint firstItem="Wsy-fe-raz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="Tze-CU-2Ab"/>
                 <constraint firstItem="rHA-5m-kkS" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="Zh5-4A-UbJ"/>
                 <constraint firstAttribute="trailing" secondItem="cQD-2Q-pvo" secondAttribute="trailing" id="fiR-iH-AGe"/>
@@ -70,10 +118,18 @@
                 <constraint firstItem="cQD-2Q-pvo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lTy-Fb-3fn"/>
                 <constraint firstItem="rHA-5m-kkS" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="tGF-Ia-4A0"/>
             </constraints>
-            <point key="canvasLocation" x="33.5" y="54.5"/>
+            <viewLayoutGuide key="safeArea" id="Q91-AY-cZC"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="Wsy-fe-raz"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="42.399999999999999" y="82.3088455772114"/>
         </view>
     </objects>
     <resources>
+        <image name="back" width="13" height="22"/>
         <image name="closeButton" width="13" height="13"/>
+        <image name="ic_share_white" width="21" height="22"/>
     </resources>
 </document>
