@@ -12,8 +12,6 @@ public final class ImageViewerController: UIViewController {
     fileprivate var transitionHandler: ImageViewerTransitioningHandler?
     fileprivate let configuration: ImageViewerConfiguration?
     
-    public var downloadButton_action: (() -> Void)?
-    
     public override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -122,7 +120,7 @@ private extension ImageViewerController {
     
     
     @IBAction func downloadButton_touchUp() {
-        downloadButton_action?()
+        configuration?.downloadButton_action?()
     }
     
     @objc func imageViewDoubleTapped(recognizer: UITapGestureRecognizer) {
