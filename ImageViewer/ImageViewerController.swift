@@ -12,9 +12,9 @@ public final class ImageViewerController: UIViewController {
     fileprivate var transitionHandler: ImageViewerTransitioningHandler?
     fileprivate let configuration: ImageViewerConfiguration?
     
-    public override var prefersStatusBarHidden: Bool {
-        return true
-    }
+//    public override var prefersStatusBarHidden: Bool {
+//        return true
+//    }
     
     public init(configuration: ImageViewerConfiguration?) {
         self.configuration = configuration
