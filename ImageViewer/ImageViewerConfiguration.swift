@@ -9,7 +9,7 @@ public final class ImageViewerConfiguration {
     public var image: YYImage?
     public var imageView: YYAnimatedImageView?
     public var imageBlock: ImageBlock?
-    public var downloadButton_action: ((UIBarItem) -> Void)?
+    public var downloadButton_action: ((UIButton) -> Void)?
     
     public typealias ConfigurationClosure = (ImageViewerConfiguration) -> ()
     

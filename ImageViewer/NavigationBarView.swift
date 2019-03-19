@@ -12,7 +12,7 @@ class NavigationBarView: UIView {
     fileprivate var navigationBar: UINavigationBar?
     fileprivate weak var superVC: UIViewController?
     fileprivate var backItem: UIBarButtonItem?
-    fileprivate var shareItem: UIBarButtonItem?
+    fileprivate var shareButton: UIButton?
     
     fileprivate var configuration: ImageViewerConfiguration?
     
@@ -65,9 +65,11 @@ class NavigationBarView: UIView {
             navItem.leftBarButtonItems = [backItem]
         }
         
-        shareItem = UIBarButtonItem(image: UIImage(named: "ic_share_white", in: Bundle(for: type(of: self)), compatibleWith: nil), style: .plain, target: self, action: #selector(downloadButton_touchUp))
-        if let shareItem = shareItem {
-            shareItem.tintColor = UIColor.white
+        shareButton = UIButton(type: .custom)
+        shareButton?.setImage(UIImage(named: "ic_share_white", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
+        shareButton?.addTarget(self, action: #selector(downloadButton_touchUp), for: .touchUpInside)
+        if let shareButton = shareButton {
+            let shareItem = UIBarButtonItem(customView: shareButton)
             navItem.rightBarButtonItems = [shareItem]
         }
         
@@ -89,8 +91,8 @@ class NavigationBarView: UIView {
     }
     
     @objc func downloadButton_touchUp() {
-        if let shareItem = shareItem {
-            configuration?.downloadButton_action?(shareItem)
+        if let shareButton = shareButton {
+            configuration?.downloadButton_action?(shareButton)
         }
     }
     
