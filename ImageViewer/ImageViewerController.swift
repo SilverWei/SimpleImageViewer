@@ -6,9 +6,7 @@ public final class ImageViewerController: UIViewController {
     @IBOutlet fileprivate var scrollView: UIScrollView!
     @IBOutlet fileprivate var imageView: YYAnimatedImageView!
     @IBOutlet fileprivate var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet fileprivate var navigationBar: UINavigationBar!
-    @IBOutlet fileprivate var navigationBarView: UIView!
-    @IBOutlet fileprivate var downloadButton: UIButton!
+    fileprivate var navigationBar: NavigationBarView?
     
     fileprivate var transitionHandler: ImageViewerTransitioningHandler?
     fileprivate let configuration: ImageViewerConfiguration?
@@ -64,8 +62,7 @@ extension ImageViewerController: UIGestureRecognizerDelegate {
 
 private extension ImageViewerController {
     func setupNavigationBar() {
-        navigationBarView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar = NavigationBarView(viewController: self, configuration: configuration)
     }
     
     func setupScrollView() {
@@ -111,26 +108,8 @@ private extension ImageViewerController {
         }
     }
     
-    @IBAction func closeButtonPressed() {
-        dismiss(animated: true)
-    }
-    
-    
-    @IBAction func downloadButton_touchUp() {
-        configuration?.downloadButton_action?(downloadButton)
-    }
-    
     @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
-        if navigationBarView.alpha == 1.0 || navigationBarView.alpha == 0.0 {
-            UIView.animate(withDuration: 0.2, animations: {
-                if self.navigationBarView.alpha == 0.0 {
-                    self.navigationBarView.alpha = 1.0
-                }
-                else {
-                    self.navigationBarView.alpha = 0.0
-                }
-            })
-        }
+        navigationBar?.switchDisplay()
     }
     
     @objc func imageViewDoubleTapped(recognizer: UITapGestureRecognizer) {
