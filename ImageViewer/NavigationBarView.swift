@@ -89,7 +89,9 @@ class NavigationBarView: UIView {
     }
     
     @objc func downloadButton_touchUp() {
-        configuration?.downloadButton_action?()
+        if let shareItem = shareItem {
+            configuration?.downloadButton_action?(shareItem)
+        }
     }
     
     @objc func closeButtonPressed() {
