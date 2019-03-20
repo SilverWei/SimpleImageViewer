@@ -62,7 +62,10 @@ extension ImageViewerController: UIGestureRecognizerDelegate {
 
 private extension ImageViewerController {
     func setupNavigationBar() {
-        navigationBar = NavigationBarView(viewController: self, configuration: configuration)
+        navigationBar = NavigationBarView(view: self.view, configuration: configuration)
+        navigationBar?.closeButtonAction = {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     func setupScrollView() {

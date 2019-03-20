@@ -14,7 +14,8 @@ final class ImageViewerPresentationTransition: NSObject, UIViewControllerAnimate
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
-        let toView = transitionContext.view(forKey: UITransitionContextViewKey.to)!
+        let containerVC = transitionContext.viewController(forKey: .from)!
+        let toView = transitionContext.view(forKey: .to)!
         let fromParentView = fromImageView.superview!
 
         let imageView = AnimatableImageView()
@@ -22,29 +23,31 @@ final class ImageViewerPresentationTransition: NSObject, UIViewControllerAnimate
         imageView.frame = fromParentView.convert(fromImageView.frame, to: nil)
         imageView.contentMode = fromImageView.contentMode
         
+        let navigationBar = NavigationBarView(view: containerVC.view, configuration: nil)
+        navigationBar.alpha = 0.0
+        
         let fadeView = UIView(frame: containerView.bounds)
         fadeView.backgroundColor = .black
         fadeView.alpha = 0.0
+        containerVC.view.addSubview(fadeView)
+        containerVC.view.addSubview(imageView)
+        containerVC.view.bringSubviewToFront(navigationBar)
         
         toView.frame = containerView.bounds
         toView.isHidden = true
         fromImageView.isHidden = true
         
         containerView.addSubview(toView)
-        containerView.addSubview(fadeView)
-        containerView.addSubview(imageView)
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext),
-                       delay: 0,
-                       usingSpringWithDamping: 0.8,
-                       initialSpringVelocity: 0,
-                       options: .curveEaseOut,  animations: {
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut,  animations: {
             imageView.contentMode = .scaleAspectFit
             imageView.frame = containerView.bounds
             fadeView.alpha = 1.0
+            navigationBar.alpha = 1.0
         }, completion: { _ in
             toView.isHidden = false
             fadeView.removeFromSuperview()
+            navigationBar.removeFromSuperview()
             imageView.removeFromSuperview()
             transitionContext.completeTransition(true)
         })

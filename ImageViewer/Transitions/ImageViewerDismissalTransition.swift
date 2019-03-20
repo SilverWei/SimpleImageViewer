@@ -9,6 +9,7 @@ final class ImageViewerDismissalTransition: NSObject, UIViewControllerAnimatedTr
     fileprivate var animatableImageview = AnimatableImageView()
     fileprivate var fromView: UIView?
     fileprivate var fadeView = UIView()
+    fileprivate var navigationBar: NavigationBarView?
     
     enum TransitionState {
         case start
@@ -36,6 +37,7 @@ final class ImageViewerDismissalTransition: NSObject, UIViewControllerAnimatedTr
     func update(percentage: CGFloat) {
         let invertedPercentage = 1.0 - percentage
         fadeView.alpha = invertedPercentage
+        navigationBar?.alpha = invertedPercentage
         scaleTransform = CGAffineTransform(scaleX: invertedPercentage, y: invertedPercentage)
     }
     
@@ -50,8 +52,9 @@ final class ImageViewerDismissalTransition: NSObject, UIViewControllerAnimatedTr
 
     func start(_ transitionContext: UIViewControllerContextTransitioning) {
         self.transitionContext = transitionContext
-        self.fromView = transitionContext.view(forKey: UITransitionContextViewKey.from)!
+        self.fromView = transitionContext.view(forKey: .from)!
         let containerView = transitionContext.containerView
+        let containerVC = transitionContext.viewController(forKey: .to)!
         let fromSuperView = fromImageView.superview!
         let image = fromImageView.image ?? toImageView.image
         
@@ -60,38 +63,35 @@ final class ImageViewerDismissalTransition: NSObject, UIViewControllerAnimatedTr
         animatableImageview.contentMode = .scaleAspectFit
         
         fromView?.isHidden = true
+        
+        navigationBar = NavigationBarView(view: containerVC.view, configuration: nil)
+        
         fadeView.frame = containerView.bounds
         fadeView.backgroundColor = .black
-        
-        containerView.addSubview(fadeView)
-        containerView.addSubview(animatableImageview)
+        containerVC.view.addSubview(fadeView)
+        containerVC.view.addSubview(animatableImageview)
+        containerVC.view.bringSubviewToFront(navigationBar!)
     }
     
     func cancel() {
         transitionContext?.cancelInteractiveTransition()
-        UIView.animate(withDuration: transitionDuration(using: transitionContext),
-                       delay: 0,
-                       options: .curveEaseInOut,
-                       animations: apply(state: .start),
-                       completion: { _ in
-                        self.fromView?.isHidden = false
-                        self.animatableImageview.removeFromSuperview()
-                        self.fadeView.removeFromSuperview()
-                        self.transitionContext?.completeTransition(false)
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut, animations: apply(state: .start), completion: { _ in
+            self.fromView?.isHidden = false
+            self.animatableImageview.removeFromSuperview()
+            self.fadeView.removeFromSuperview()
+            self.navigationBar?.removeFromSuperview()
+            self.transitionContext?.completeTransition(false)
         })
     }
     
     func finish() {
-        UIView.animate(withDuration: transitionDuration(using: transitionContext),
-                       delay: 0,
-                       options: .curveEaseInOut,
-                       animations: apply(state: .end),
-                       completion: { _ in
-                        self.toImageView.isHidden = false
-                        self.fadeView.removeFromSuperview()
-                        self.animatableImageview.removeFromSuperview()
-                        self.fromView?.removeFromSuperview()
-                        self.transitionContext?.completeTransition(true)
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut, animations: apply(state: .end), completion: { _ in
+            self.toImageView.isHidden = false
+            self.fadeView.removeFromSuperview()
+            self.navigationBar?.removeFromSuperview()
+            self.animatableImageview.removeFromSuperview()
+            self.fromView?.removeFromSuperview()
+            self.transitionContext?.completeTransition(true)
         })
     }
 }
@@ -109,11 +109,13 @@ private extension ImageViewerDismissalTransition {
                 self.animatableImageview.transform = .identity
                 self.animatableImageview.frame = self.fromImageView.frame
                 self.fadeView.alpha = 1.0
+                self.navigationBar?.alpha = 1.0
             case .end:
                 self.animatableImageview.contentMode = self.toImageView.contentMode
                 self.animatableImageview.transform = .identity
                 self.animatableImageview.frame = self.toImageView.superview!.convert(self.toImageView.frame, to: nil)
                 self.fadeView.alpha = 0.0
+                self.navigationBar?.alpha = 0.0
             }
         }
     }

@@ -10,16 +10,18 @@ import UIKit
 
 class NavigationBarView: UIView {
     fileprivate var navigationBar: UINavigationBar?
-    fileprivate weak var superVC: UIViewController?
+    fileprivate weak var superView: UIView?
     fileprivate var backItem: UIBarButtonItem?
     fileprivate var shareButton: UIButton?
     
     fileprivate var configuration: ImageViewerConfiguration?
     
-    init(viewController: UIViewController, configuration: ImageViewerConfiguration?) {
+    var closeButtonAction: (() -> Void)?
+    
+    init(view: UIView, configuration: ImageViewerConfiguration?) {
         self.configuration = configuration
-        super.init(frame: viewController.view.frame)
-        superVC = viewController
+        super.init(frame: UIApplication.shared.keyWindow?.rootViewController?.view.frame ?? view.frame)
+        superView = view
         setup()
         setupItems()
     }
@@ -31,7 +33,9 @@ class NavigationBarView: UIView {
     private func setup() {
         backgroundColor = UIColor.black.withAlphaComponent(0.5)
         translatesAutoresizingMaskIntoConstraints = false
-        superVC?.view.addSubview(self)
+        
+        superView?.addSubview(self)
+        
         navigationBar = { () -> UINavigationBar in
             let navigationBar = UINavigationBar()
             navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -48,7 +52,7 @@ class NavigationBarView: UIView {
             addConstraints([left, right])
             return navigationBar
         }()
-        if let superView = superVC?.view {
+        if let superView = superView {
             let top = NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1.0, constant: 0.0)
             let left = NSLayoutConstraint(item: self, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1.0, constant: 0.0)
             let right = NSLayoutConstraint(item: self, attribute: .right, relatedBy: .equal, toItem: superView, attribute: .right, multiplier: 1.0, constant: 0.0)
@@ -97,6 +101,6 @@ class NavigationBarView: UIView {
     }
     
     @objc func closeButtonPressed() {
-        superVC?.dismiss(animated: true)
+        closeButtonAction?()
     }
 }
