@@ -102,10 +102,12 @@ private extension ImageViewerController {
     func setupActivityIndicator() {
         guard let block = configuration?.imageBlock else { return }
         activityIndicator.startAnimating()
+        navigationBar?.actionButton?.isEnabled = false
         block { [weak self] image in
             guard let image = image else { return }
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
+                self?.navigationBar?.actionButton?.isEnabled = true
                 if let imageView = self?.imageView {
                     UIView.transition(with: imageView, duration: 0.25, options: .transitionCrossDissolve, animations: {
                         imageView.image = image

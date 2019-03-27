@@ -12,7 +12,7 @@ class NavigationBarView: UIView {
     fileprivate var navigationBar: UINavigationBar?
     fileprivate weak var superView: UIView?
     fileprivate var backItem: UIBarButtonItem?
-    fileprivate var actionButton: UIBarButtonItem?
+    var actionButton: UIBarButtonItem?
     
     fileprivate var configuration: ImageViewerConfiguration?
     
