@@ -106,7 +106,11 @@ private extension ImageViewerController {
             guard let image = image else { return }
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
-                self?.imageView.image = image
+                if let imageView = self?.imageView {
+                    UIView.transition(with: imageView, duration: 0.25, options: .transitionCrossDissolve, animations: {
+                        imageView.image = image
+                    }, completion: nil)
+                }
             }
         }
     }
