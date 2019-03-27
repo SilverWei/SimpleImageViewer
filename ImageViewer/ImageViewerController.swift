@@ -7,6 +7,7 @@ public final class ImageViewerController: UIViewController {
     @IBOutlet fileprivate var imageView: YYAnimatedImageView!
     @IBOutlet fileprivate var activityIndicator: UIActivityIndicatorView!
     fileprivate var navigationBar: NavigationBarView?
+    fileprivate var bottomToolBar: BottomToolBar?
     
     fileprivate var transitionHandler: ImageViewerTransitioningHandler?
     fileprivate let configuration: ImageViewerConfiguration?
@@ -33,6 +34,7 @@ public final class ImageViewerController: UIViewController {
         imageView.image = configuration?.imageView?.image ?? configuration?.image
         
         setupNavigationBar()
+        setupBottomToolBar()
         setupScrollView()
         setupGestureRecognizers()
         setupTransitions()
@@ -66,6 +68,10 @@ private extension ImageViewerController {
         navigationBar?.closeButtonAction = {
             self.dismiss(animated: true, completion: nil)
         }
+    }
+    
+    func setupBottomToolBar() {
+        bottomToolBar = BottomToolBar(view: self.view, configuration: configuration)
     }
     
     func setupScrollView() {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		477C5C072240CEF400B26425 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C5C052240A04B00B26425 /* NavigationBarView.swift */; };
 		477C5C082240F21000B26425 /* ImageViewer-Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A07E77231ECF289800B77D46 /* ImageViewer-Assets.xcassets */; };
+		47868118224BA601000F494D /* BottomToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47868116224BA530000F494D /* BottomToolBar.swift */; };
 		954412F86F879A3357AA7D99 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FA894F7A085354982E735D4 /* Pods_Example.framework */; };
 		A02EE5CF1EF172C8000EAB41 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02EE5CD1EF172C3000EAB41 /* Utilities.swift */; };
 		A02EE5D71EF1897D000EAB41 /* UtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02EE5D61EF1897D000EAB41 /* UtilitiesTests.swift */; };
@@ -63,6 +64,7 @@
 		323655919126ACD74BA719D7 /* Pods-SimpleImageViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleImageViewer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleImageViewer/Pods-SimpleImageViewer.debug.xcconfig"; sourceTree = "<group>"; };
 		3FA894F7A085354982E735D4 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		477C5C052240A04B00B26425 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		47868116224BA530000F494D /* BottomToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolBar.swift; sourceTree = "<group>"; };
 		57662C2920F530E26537AFC9 /* Pods_SimpleImageViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleImageViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		633FDEB295C6156183564317 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		A02EE5B81EF16E54000EAB41 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				A07E771F1ECE390C00B77D46 /* AnimatableImageView.swift */,
 				A02EE5CD1EF172C3000EAB41 /* Utilities.swift */,
 				477C5C052240A04B00B26425 /* NavigationBarView.swift */,
+				47868116224BA530000F494D /* BottomToolBar.swift */,
 				A08B781E1EF16CCF00F8C5BC /* ImageViewerController */,
 				A07E77181ECE2EC800B77D46 /* Transitions */,
 				A03518711EDD6C7D00AAE484 /* Resources */,
@@ -345,6 +348,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -484,6 +488,7 @@
 			files = (
 				A0BF70B41EDC758300109F6E /* ImageViewerTransitioningHandler.swift in Sources */,
 				A0BF70B51EDC758300109F6E /* ImageViewerPresentationTransition.swift in Sources */,
+				47868118224BA601000F494D /* BottomToolBar.swift in Sources */,
 				A02EE5CF1EF172C8000EAB41 /* Utilities.swift in Sources */,
 				A0BF70B61EDC758300109F6E /* ImageViewerDismissalTransition.swift in Sources */,
 				A0BF70B71EDC758300109F6E /* ImageViewerController.swift in Sources */,
