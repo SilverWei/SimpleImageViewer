@@ -41,10 +41,10 @@ class BottomToolBar: UIView {
             addSubview(view)
             let left = NSLayoutConstraint(item: view, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 20.0)
             if #available(iOS 11.0, *) {
-                addConstraint(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: safeAreaLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0.0))
+                addConstraint(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: safeAreaLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: -20.0))
             }
             else {
-                addConstraint(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: bottomAnchor, attribute: .top, multiplier: 1.0, constant: 0.0))
+                addConstraint(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: bottomAnchor, attribute: .bottom, multiplier: 1.0, constant: -20.0))
             }
             addConstraints([left])
             view.layer.rasterizationScale = UIScreen.main.scale
