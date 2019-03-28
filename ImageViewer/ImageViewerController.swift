@@ -6,8 +6,8 @@ public final class ImageViewerController: UIViewController {
     @IBOutlet fileprivate var scrollView: UIScrollView!
     @IBOutlet fileprivate var imageView: YYAnimatedImageView!
     @IBOutlet fileprivate var activityIndicator: UIActivityIndicatorView!
-    fileprivate var navigationBar: NavigationBarView?
-    fileprivate var bottomToolBar: BottomToolBar?
+    var navigationBar: NavigationBarView?
+    var bottomToolBar: BottomToolBar?
     
     fileprivate var transitionHandler: ImageViewerTransitioningHandler?
     fileprivate let configuration: ImageViewerConfiguration?
@@ -71,7 +71,7 @@ private extension ImageViewerController {
     }
     
     func setupBottomToolBar() {
-        bottomToolBar = BottomToolBar(view: self.view, configuration: configuration)
+        bottomToolBar = BottomToolBar(configuration: configuration)
     }
     
     func setupScrollView() {
@@ -101,7 +101,7 @@ private extension ImageViewerController {
     
     func setupTransitions() {
         guard let imageView = configuration?.imageView else { return }
-        transitionHandler = ImageViewerTransitioningHandler(fromImageView: imageView, toImageView: self.imageView)
+        transitionHandler = ImageViewerTransitioningHandler(fromImageView: imageView, toImageView: self.imageView, configuration: configuration)
         transitioningDelegate = transitionHandler
     }
     
@@ -123,6 +123,7 @@ private extension ImageViewerController {
     
     @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
         navigationBar?.switchDisplay()
+        bottomToolBar?.switchDisplay()
     }
     
     @objc func imageViewDoubleTapped(recognizer: UITapGestureRecognizer) {
@@ -169,4 +170,8 @@ private extension ImageViewerController {
         }
     }
 }
-
+public extension ImageViewerController {
+    func set(imageUrl: String) {
+        bottomToolBar?.urlLabel?.text = imageUrl
+    }
+}

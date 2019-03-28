@@ -4,8 +4,9 @@ Pod::Spec.new do |s|
   s.name = "SimpleImageViewer"
   s.summary = "A snappy image viewer with zoom and interactive dismissal transition."
   s.dependency 'YYImage', '~> 1.0.4'
+  s.dependency 'PinterestSegment', '~> 1.2.3'
   s.requires_arc = true
-  s.version = "1.1.1.19"
+  s.version = "1.1.1.20"
   s.license = { :type => "MIT", :file => "LICENSE" }
   s.author = { "Lucas" => "lucas@afrogleap.com" }
   s.homepage = "https://github.com/aFrogleap/SimpleImageViewer"

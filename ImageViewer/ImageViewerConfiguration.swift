@@ -10,6 +10,13 @@ public final class ImageViewerConfiguration {
     public var imageView: YYAnimatedImageView?
     public var imageBlock: ImageBlock?
     public var actionButton_action: ((UIBarButtonItem) -> Void)?
+    public var styleControlTitles: [String]?
+    public var styleControlIndex: Int?
+    public var imageName: String?
+    public var imageUrl: String?
+    public var date: String?
+    public var urlStyleControl_action: ((Int?) -> Void)?
+    public var copyUrlButton_action: ((Int?) -> Void)?
     
     public typealias ConfigurationClosure = (ImageViewerConfiguration) -> ()
     

@@ -7,20 +7,20 @@
 //
 
 import UIKit
+import PinterestSegment
 
 class BottomToolBar: UIView {
-    fileprivate weak var superView: UIView?
     fileprivate var nameLabel: UILabel?
     fileprivate var dateLabel: UILabel?
-    fileprivate var urlLabel: UILabel?
+    public var urlLabel: UILabel?
     fileprivate var copyUrlButton: UIButton?
+    fileprivate var urlStyleControl: PinterestSegment?
     
     fileprivate var configuration: ImageViewerConfiguration?
     
-    init(view: UIView, configuration: ImageViewerConfiguration?) {
+    init(configuration: ImageViewerConfiguration?) {
         self.configuration = configuration
-        super.init(frame: UIApplication.shared.keyWindow?.rootViewController?.view.frame ?? view.frame)
-        superView = view
+        super.init(frame: UIApplication.shared.keyWindow?.rootViewController?.view.frame ?? CGRect.zero)
         setup()
     }
     
@@ -30,10 +30,8 @@ class BottomToolBar: UIView {
     
     private func setup() {
         backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        
         translatesAutoresizingMaskIntoConstraints = false
-        
-        superView?.addSubview(self)
-        
         let urlBackgroundView = { () -> UIView in
             let view = UIView()
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -62,7 +60,7 @@ class BottomToolBar: UIView {
             addConstraints([centerY, centerX, left])
             
             label.textColor = .lightGray
-            label.text = "https://ooo.0o0.ooo/2015/10/13/561cfc3282a13.png"
+            label.text = configuration?.imageUrl ?? ""
             return label
         }()
         copyUrlButton = { () -> UIButton in
@@ -73,10 +71,12 @@ class BottomToolBar: UIView {
             let left = NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: urlBackgroundView, attribute: .right, multiplier: 1.0, constant: 0.0)
             let right = NSLayoutConstraint(item: button, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0.0)
             let ratio = NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: button, attribute: .height, multiplier: 1.5, constant: 0.0)
-            let height = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25.0)
+            let height = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 44.0)
             let bottom = NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: urlBackgroundView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
             let equalHeight = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: urlBackgroundView, attribute: .height, multiplier: 1.0, constant: 0.0)
             addConstraints([left, right, ratio, height, bottom, equalHeight])
+            
+            button.addTarget(self, action: #selector(copyUrlButton_action), for: .touchUpInside)
             return button
         }()
         nameLabel = { () -> UILabel in
@@ -84,12 +84,18 @@ class BottomToolBar: UIView {
             label.translatesAutoresizingMaskIntoConstraints = false
             label.font = label.font.withSize(18.0)
             addSubview(label)
-            let left = NSLayoutConstraint(item: label, attribute: .left, relatedBy: .equal, toItem: urlBackgroundView, attribute: .left, multiplier: 1.0, constant: 0.0)
+            let top = NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 10)
             let right = NSLayoutConstraint(item: label, attribute: .right, relatedBy: .equal, toItem: copyUrlButton, attribute: .right, multiplier: 1.0, constant: -20.0)
-            addConstraints([left, right])
+            addConstraints([top, right])
+            if #available(iOS 11.0, *) {
+                addConstraint(NSLayoutConstraint(item: label, attribute: .left, relatedBy: .equal, toItem: safeAreaLayoutGuide, attribute: .left, multiplier: 1.0, constant: 20.0))
+            }
+            else {
+                addConstraint(NSLayoutConstraint(item: label, attribute: .left, relatedBy: .equal, toItem: bottomAnchor, attribute: .left, multiplier: 1.0, constant: 20.0))
+            }
             
             label.textColor = .white
-            label.text = "SMMS"
+            label.text = configuration?.imageName ?? ""
             return label
         }()
         let timeImageView = { () -> UIImageView in
@@ -97,7 +103,7 @@ class BottomToolBar: UIView {
             imageView.translatesAutoresizingMaskIntoConstraints = false
             addSubview(imageView)
             let top = NSLayoutConstraint(item: imageView, attribute: .top, relatedBy: .equal, toItem: nameLabel, attribute: .bottom, multiplier: 1.0, constant: 10)
-            let left = NSLayoutConstraint(item: imageView, attribute: .left, relatedBy: .equal, toItem: urlBackgroundView, attribute: .left, multiplier: 1.0, constant: 0.0)
+            let left = NSLayoutConstraint(item: imageView, attribute: .left, relatedBy: .equal, toItem: nameLabel, attribute: .left, multiplier: 1.0, constant: 0.0)
             addConstraints([top, left])
             return imageView
         }()
@@ -111,31 +117,57 @@ class BottomToolBar: UIView {
             let right = NSLayoutConstraint(item: label, attribute: .right, relatedBy: .equal, toItem: copyUrlButton, attribute: .right, multiplier: 1.0, constant: -20.0)
             addConstraints([left, centerY, right])
             
-            label.textColor = .white
-            label.text = "2019-03-27 19:00"
+            label.textColor = .lightGray
+            label.text = configuration?.date ?? "—— ——"
             return label
             }()
-        let _ = { () -> UIView in
-            let view = UIView()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            view.backgroundColor = .purple
-            addSubview(view)
-            let bottomSpace = NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: urlBackgroundView, attribute: .top, multiplier: 1.0, constant: -10)
-            let top = NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: timeImageView, attribute: .bottom, multiplier: 1.0, constant: 10)
-            let height = NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 44)
-            let left = NSLayoutConstraint(item: view, attribute: .left, relatedBy: .equal, toItem: urlBackgroundView, attribute: .left, multiplier: 1.0, constant: 0.0)
-            let right = NSLayoutConstraint(item: view, attribute: .right, relatedBy: .equal, toItem: nameLabel, attribute: .right, multiplier: 1.0, constant: 0.0)
-            addConstraints([bottomSpace, top, height, left, right])
-            return view
+        urlStyleControl = { () -> PinterestSegment in
+            let control = PinterestSegment()
+            control.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(control)
+            let bottomSpace = NSLayoutConstraint(item: control, attribute: .bottom, relatedBy: .equal, toItem: urlBackgroundView, attribute: .top, multiplier: 1.0, constant: -10)
+            let top = NSLayoutConstraint(item: control, attribute: .top, relatedBy: .equal, toItem: timeImageView, attribute: .bottom, multiplier: 1.0, constant: 10)
+            let height = NSLayoutConstraint(item: control, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40)
+            let right = NSLayoutConstraint(item: control, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0.0)
+            addConstraints([bottomSpace, top, height, right])
+            if #available(iOS 11.0, *) {
+                addConstraint(NSLayoutConstraint(item: control, attribute: .left, relatedBy: .equal, toItem: safeAreaLayoutGuide, attribute: .left, multiplier: 1.0, constant: 0.0))
+            }
+            else {
+                addConstraint(NSLayoutConstraint(item: control, attribute: .left, relatedBy: .equal, toItem: bottomAnchor, attribute: .left, multiplier: 1.0, constant: 0.0))
+            }
+            
+            control.titles = configuration?.styleControlTitles ?? []
+            control.style.titleFont = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(5))
+            control.style.indicatorColor = UIColor(white: 1.0, alpha: 0.15)
+            control.style.titlePendingHorizontal = 10
+            control.style.normalTitleColor = .lightGray
+            control.style.selectedTitleColor = .white
+            
+            control.setSelectIndex(index: 0)
+            control.valueChange = { index in
+                self.configuration?.urlStyleControl_action?(index)
+                self.configuration?.styleControlIndex = index
+            }
+            
+            return control
         }()
-
-        if let superView = superView {
-            let top = NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: nameLabel, attribute: .top, multiplier: 1.0, constant: -10)
-            let left = NSLayoutConstraint(item: self, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1.0, constant: 0.0)
-            let right = NSLayoutConstraint(item: self, attribute: .right, relatedBy: .equal, toItem: superView, attribute: .right, multiplier: 1.0, constant: 0.0)
-            let bottom = NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-            addConstraints([top])
-            superView.addConstraints([left, right, bottom])
+    }
+    
+    func switchDisplay() {
+        if alpha == 1.0 || alpha == 0.0 {
+            UIView.animate(withDuration: 0.2, animations: {
+                if self.alpha == 0.0 {
+                    self.alpha = 1.0
+                }
+                else {
+                    self.alpha = 0.0
+                }
+            })
         }
+    }
+    
+    @objc func copyUrlButton_action() {
+        configuration?.copyUrlButton_action?(configuration?.styleControlIndex)
     }
 }

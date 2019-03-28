@@ -10,5 +10,6 @@ target 'Example' do
 end
 
 target 'SimpleImageViewer' do
+    pod 'PinterestSegment', '~> 1.2.3'
     gif
 end
