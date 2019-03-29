@@ -76,6 +76,7 @@ class BottomToolBar: UIView {
             
             label.textColor = .lightGray
             label.text = configuration?.copyMsgText ?? ""
+            label.textAlignment = .center
             label.alpha = 0.0
             return label
         }()
