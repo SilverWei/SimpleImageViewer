@@ -14,6 +14,7 @@ public final class ImageViewerConfiguration {
     public var styleControlIndex: Int?
     public var imageName: String?
     public var imageUrl: String?
+    public var copyMsgText: String?
     public var date: String?
     public var urlStyleControl_action: ((Int?) -> Void)?
     public var copyUrlButton_action: ((Int?) -> Void)?

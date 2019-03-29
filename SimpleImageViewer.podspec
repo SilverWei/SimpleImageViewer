@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.dependency 'YYImage', '~> 1.0.4'
   s.dependency 'PinterestSegment', '~> 1.2.3'
   s.requires_arc = true
-  s.version = "1.1.1.21"
+  s.version = "1.1.1.22"
   s.license = { :type => "MIT", :file => "LICENSE" }
   s.author = { "Lucas" => "lucas@afrogleap.com" }
   s.homepage = "https://github.com/aFrogleap/SimpleImageViewer"

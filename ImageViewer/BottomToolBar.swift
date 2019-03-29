@@ -14,6 +14,7 @@ class BottomToolBar: UIView {
     fileprivate var dateLabel: UILabel?
     public var urlLabel: UILabel?
     fileprivate var copyUrlButton: UIButton?
+    fileprivate var copyMsgLabel: UILabel?
     fileprivate var urlStyleControl: PinterestSegment?
     
     fileprivate var configuration: ImageViewerConfiguration?
@@ -61,6 +62,21 @@ class BottomToolBar: UIView {
             
             label.textColor = .lightGray
             label.text = configuration?.imageUrl ?? ""
+            return label
+        }()
+        copyMsgLabel = { () -> UILabel in
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.font = label.font.withSize(17.0)
+            addSubview(label)
+            let centerY = NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: urlBackgroundView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+            let centerX = NSLayoutConstraint(item: label, attribute: .centerX, relatedBy: .equal, toItem: urlBackgroundView, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+            let left = NSLayoutConstraint(item: label, attribute: .left, relatedBy: .equal, toItem: urlBackgroundView, attribute: .left, multiplier: 1.0, constant: 7.5)
+            addConstraints([centerY, centerX, left])
+            
+            label.textColor = .lightGray
+            label.text = configuration?.copyMsgText ?? ""
+            label.alpha = 0.0
             return label
         }()
         copyUrlButton = { () -> UIButton in
@@ -168,6 +184,16 @@ class BottomToolBar: UIView {
     }
     
     @objc func copyUrlButton_action() {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+            self.urlLabel?.alpha = 0
+            self.copyMsgLabel?.alpha = 1
+        }) { (_) in
+            UIView.animate(withDuration: 0.3, delay: 0.75, options: .curveEaseInOut, animations: {
+                self.urlLabel?.alpha = 1
+                self.copyMsgLabel?.alpha = 0
+            }, completion: nil)
+        }
         configuration?.copyUrlButton_action?(configuration?.styleControlIndex)
+        
     }
 }
