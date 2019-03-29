@@ -41,6 +41,9 @@ final class ImageViewerDismissalTransition: NSObject, UIViewControllerAnimatedTr
         let invertedPercentage = 1.0 - percentage
         fadeView.alpha = invertedPercentage
         navigationBar?.alpha = invertedPercentage
+        navigationBar?.transform = CGAffineTransform(translationX: 0, y: -1 * (200 - (invertedPercentage * 200)))
+        bottomToolBar?.alpha = invertedPercentage
+        bottomToolBar?.transform = CGAffineTransform(translationX: 0, y: 200 - (invertedPercentage * 200))
         scaleTransform = CGAffineTransform(scaleX: invertedPercentage, y: invertedPercentage)
     }
     
@@ -137,14 +140,18 @@ private extension ImageViewerDismissalTransition {
                 self.animatableImageview.frame = self.fromImageView.frame
                 self.fadeView.alpha = 1.0
                 self.navigationBar?.alpha = 1.0
+                self.navigationBar?.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.bottomToolBar?.alpha = 1.0
+                self.bottomToolBar?.transform = CGAffineTransform(translationX: 0, y: 0)
             case .end:
                 self.animatableImageview.contentMode = self.toImageView.contentMode
                 self.animatableImageview.transform = .identity
                 self.animatableImageview.frame = self.toImageView.superview!.convert(self.toImageView.frame, to: nil)
                 self.fadeView.alpha = 0.0
                 self.navigationBar?.alpha = 0.0
+                self.navigationBar?.transform = CGAffineTransform(translationX: 0, y: -200)
                 self.bottomToolBar?.alpha = 0.0
+                self.bottomToolBar?.transform = CGAffineTransform(translationX: 0, y: 200)
             }
         }
     }

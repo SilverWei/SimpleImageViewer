@@ -54,12 +54,17 @@ final class ImageViewerPresentationTransition: NSObject, UIViewControllerAnimate
         
         containerView.addSubview(toView)
         
+        navigationBar.transform = CGAffineTransform(translationX: 0, y: -200)
+        bottomToolBar?.transform = CGAffineTransform(translationX: 0, y: 200)
+        
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut,  animations: {
             imageView.contentMode = .scaleAspectFit
             imageView.frame = containerView.bounds
             fadeView.alpha = 1.0
             navigationBar.alpha = 1.0
             self.bottomToolBar?.alpha = 1.0
+            navigationBar.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.bottomToolBar?.transform = CGAffineTransform(translationX: 0, y: 0)
         }, completion: { _ in
             toView.isHidden = false
             fadeView.removeFromSuperview()
