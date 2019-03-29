@@ -118,6 +118,7 @@ final class ImageViewerDismissalTransition: NSObject, UIViewControllerAnimatedTr
             self.animatableImageview.removeFromSuperview()
             self.fromView?.removeFromSuperview()
             self.transitionContext?.completeTransition(true)
+            self.configuration?.finish_action?()
         })
     }
 }

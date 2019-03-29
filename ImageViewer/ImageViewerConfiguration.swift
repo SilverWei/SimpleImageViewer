@@ -17,6 +17,7 @@ public final class ImageViewerConfiguration {
     public var date: String?
     public var urlStyleControl_action: ((Int?) -> Void)?
     public var copyUrlButton_action: ((Int?) -> Void)?
+    public var finish_action: (() -> Void)?
     
     public typealias ConfigurationClosure = (ImageViewerConfiguration) -> ()
     
