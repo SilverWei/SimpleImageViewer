@@ -26,7 +26,6 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return contentModes.count
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
