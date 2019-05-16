@@ -104,9 +104,15 @@ final class ImageViewerDismissalTransition: NSObject, UIViewControllerAnimatedTr
             self.fromView?.isHidden = false
             self.animatableImageview.removeFromSuperview()
             self.fadeView.removeFromSuperview()
-            self.navigationBar?.removeFromSuperview()
             
             let fromVC = self.transitionContext?.viewController(forKey: .from) as! ImageViewerController
+            if let navigationBar = fromVC.navigationBar {
+                fromVC.view.addSubview(navigationBar)
+                let top = NSLayoutConstraint(item: navigationBar, attribute: .top, relatedBy: .equal, toItem: fromVC.view, attribute: .top, multiplier: 1.0, constant: 0.0)
+                let left = NSLayoutConstraint(item: navigationBar, attribute: .left, relatedBy: .equal, toItem: fromVC.view, attribute: .left, multiplier: 1.0, constant: 0.0)
+                let right = NSLayoutConstraint(item: navigationBar, attribute: .right, relatedBy: .equal, toItem: fromVC.view, attribute: .right, multiplier: 1.0, constant: 0.0)
+                fromVC.view.addConstraints([top, left, right])
+            }
             if let bottomToolBar = self.bottomToolBar {
                 fromVC.view.addSubview(bottomToolBar)
                 let left = NSLayoutConstraint(item: bottomToolBar, attribute: .left, relatedBy: .equal, toItem: fromVC.view, attribute: .left, multiplier: 1.0, constant: 0.0)
