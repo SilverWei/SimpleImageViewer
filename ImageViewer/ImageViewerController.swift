@@ -6,7 +6,7 @@ public final class ImageViewerController: UIViewController {
     @IBOutlet fileprivate var scrollView: UIScrollView!
     @IBOutlet fileprivate var imageView: YYAnimatedImageView!
     @IBOutlet fileprivate var activityIndicator: UIActivityIndicatorView!
-    var navigationBar: NavigationBarView?
+    var navigationBar: NavigationBar?
     var bottomToolBar: BottomToolBar?
     
     fileprivate var transitionHandler: ImageViewerTransitioningHandler?
@@ -64,9 +64,9 @@ extension ImageViewerController: UIGestureRecognizerDelegate {
 
 private extension ImageViewerController {
     func setupNavigationBar() {
-        navigationBar = NavigationBarView(view: self.view, configuration: configuration)
-        navigationBar?.closeButtonAction = {
-            self.dismiss(animated: true, completion: nil)
+        navigationBar = NavigationBar(configuration: configuration)
+        navigationBar?.closeItemAction = { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
         }
     }
     

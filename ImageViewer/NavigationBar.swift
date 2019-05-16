@@ -1,5 +1,5 @@
 //
-//  NavigationBarView.swift
+//  NavigationBar.swift
 //  Example
 //
 //  Created by dmql on 2019/3/19.
@@ -8,20 +8,17 @@
 
 import UIKit
 
-class NavigationBarView: UIView {
+class NavigationBar: UIView {
     fileprivate var navigationBar: UINavigationBar?
     fileprivate weak var superView: UIView?
-    fileprivate var backItem: UIBarButtonItem?
-    var actionButton: UIBarButtonItem?
     
     fileprivate var configuration: ImageViewerConfiguration?
     
-    var closeButtonAction: (() -> Void)?
+    var closeItemAction: (() -> Void)?
     
-    init(view: UIView, configuration: ImageViewerConfiguration?) {
+    init(configuration: ImageViewerConfiguration?) {
         self.configuration = configuration
-        super.init(frame: UIApplication.shared.keyWindow?.rootViewController?.view.frame ?? view.frame)
-        superView = view
+        super.init(frame: UIApplication.shared.keyWindow?.rootViewController?.view.frame ?? CGRect.zero)
         setup()
         setupItems()
     }
@@ -33,8 +30,6 @@ class NavigationBarView: UIView {
     private func setup() {
         backgroundColor = UIColor.black.withAlphaComponent(0.5)
         translatesAutoresizingMaskIntoConstraints = false
-        
-        superView?.addSubview(self)
         
         navigationBar = { () -> UINavigationBar in
             let navigationBar = UINavigationBar()
@@ -49,34 +44,34 @@ class NavigationBarView: UIView {
             }
             let left = NSLayoutConstraint(item: navigationBar, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 0.0)
             let right = NSLayoutConstraint(item: navigationBar, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0.0)
-            addConstraints([left, right])
+            let bottom = NSLayoutConstraint(item: navigationBar, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+            addConstraints([left, right, bottom])
             return navigationBar
         }()
-        if let superView = superView {
-            let top = NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1.0, constant: 0.0)
-            let left = NSLayoutConstraint(item: self, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1.0, constant: 0.0)
-            let right = NSLayoutConstraint(item: self, attribute: .right, relatedBy: .equal, toItem: superView, attribute: .right, multiplier: 1.0, constant: 0.0)
-            let bottom = NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: navigationBar, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-            superView.addConstraints([top, left, right, bottom])
-        }
     }
     
     private func setupItems() {
         let navItem = UINavigationItem()
-        backItem = UIBarButtonItem(image: UIImage(named: "back", in: Bundle(for: type(of: self)), compatibleWith: nil), style: .plain, target: self, action: #selector(closeButtonPressed))
-        if let backItem = backItem {
-            backItem.tintColor = UIColor.white
-            navItem.leftBarButtonItems = [backItem]
-        }
+        let backItem = { () -> UIBarButtonItem in
+            let item = UIBarButtonItem(image: UIImage(named: "back", in: Bundle(for: type(of: self)), compatibleWith: nil), style: .plain, target: self, action: #selector(closeButtonPressed))
+            item.tintColor = UIColor.white
+            return item
+        }()
+        navItem.leftBarButtonItems = [backItem]
         
-        actionButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionButton_action))
-        actionButton?.tintColor = .white
-        if let actionButton = actionButton {
-            navItem.rightBarButtonItems = [actionButton]
-        }
+        let deleteItem = { () -> UIBarButtonItem in
+            let item = UIBarButtonItem(image: UIImage(named: "ic_delete", in: Bundle(for: type(of: self)), compatibleWith: nil), style: .plain, target: self, action: #selector(deleteItem_action(_:)))
+            item.tintColor = .white
+            return item
+        }()
+        let actionItem = { () -> UIBarButtonItem in
+            let item = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionItem_action(_:)))
+            item.tintColor = .white
+            return item
+        }()
+        navItem.rightBarButtonItems = [actionItem, deleteItem]
         
         navigationBar?.items = [navItem]
-        
     }
     
     func switchDisplay() {
@@ -92,13 +87,15 @@ class NavigationBarView: UIView {
         }
     }
     
-    @objc func actionButton_action() {
-        if let actionButton = actionButton {
-            configuration?.actionButton_action?(actionButton)
-        }
+    @objc func deleteItem_action(_ sender: UIBarButtonItem) {
+        configuration?.deleteItem_action?(sender)
+    }
+    
+    @objc func actionItem_action(_ sender: UIBarButtonItem) {
+        configuration?.actionItem_action?(sender)
     }
     
     @objc func closeButtonPressed() {
-        closeButtonAction?()
+        closeItemAction?()
     }
 }

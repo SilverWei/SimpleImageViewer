@@ -10,7 +10,7 @@ final class ImageViewerDismissalTransition: NSObject, UIViewControllerAnimatedTr
     fileprivate var animatableImageview = AnimatableImageView()
     fileprivate var fromView: UIView?
     fileprivate var fadeView = UIView()
-    fileprivate var navigationBar: NavigationBarView?
+    fileprivate var navigationBar: NavigationBar?
     fileprivate var bottomToolBar: BottomToolBar?
     
     enum TransitionState {
@@ -71,7 +71,14 @@ final class ImageViewerDismissalTransition: NSObject, UIViewControllerAnimatedTr
         
         fromView?.isHidden = true
         
-        navigationBar = NavigationBarView(view: containerVC.view, configuration: nil)
+        if let navigationBar = fromVC.navigationBar {
+            self.navigationBar = navigationBar
+            containerVC.view.addSubview(navigationBar)
+            let top = NSLayoutConstraint(item: navigationBar, attribute: .top, relatedBy: .equal, toItem: containerVC.view, attribute: .top, multiplier: 1.0, constant: 0.0)
+            let left = NSLayoutConstraint(item: navigationBar, attribute: .left, relatedBy: .equal, toItem: containerVC.view, attribute: .left, multiplier: 1.0, constant: 0.0)
+            let right = NSLayoutConstraint(item: navigationBar, attribute: .right, relatedBy: .equal, toItem: containerVC.view, attribute: .right, multiplier: 1.0, constant: 0.0)
+            containerVC.view.addConstraints([top, left, right])
+        }
         
         if let bottomToolBar = fromVC.bottomToolBar {
             self.bottomToolBar = bottomToolBar
@@ -92,7 +99,8 @@ final class ImageViewerDismissalTransition: NSObject, UIViewControllerAnimatedTr
     
     func cancel() {
         transitionContext?.cancelInteractiveTransition()
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut, animations: apply(state: .start), completion: { _ in
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut, animations: apply(state: .start), completion: { [weak self] _ in
+            guard let `self` = self else { return }
             self.fromView?.isHidden = false
             self.animatableImageview.removeFromSuperview()
             self.fadeView.removeFromSuperview()

@@ -9,7 +9,8 @@ public final class ImageViewerConfiguration {
     public var image: YYImage?
     public var imageView: YYAnimatedImageView?
     public var imageBlock: ImageBlock?
-    public var actionButton_action: ((UIBarButtonItem) -> Void)?
+    public var actionItem_action: ((UIBarButtonItem) -> Void)?
+    public var deleteItem_action: ((UIBarButtonItem) -> Void)?
     public var styleControlTitles: [String]?
     public var styleControlIndex: Int?
     public var imageName: String?
