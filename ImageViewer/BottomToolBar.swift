@@ -162,9 +162,9 @@ class BottomToolBar: UIView {
             control.style.selectedTitleColor = .white
             
             control.setSelectIndex(index: 0)
-            control.valueChange = { index in
-                self.configuration?.urlStyleControl_action?(index)
-                self.configuration?.styleControlIndex = index
+            control.valueChange = { [weak self] index in
+                self?.configuration?.urlStyleControl_action?(index)
+                self?.configuration?.styleControlIndex = index
             }
             
             return control
