@@ -5,6 +5,7 @@ Pod::Spec.new do |s|
   s.summary = "A snappy image viewer with zoom and interactive dismissal transition."
   s.dependency 'YYImage', '~> 1.0.4'
   s.dependency 'PinterestSegment', '~> 1.2.3'
+  s.dependency 'SnapKit', '~> 4.2.0'
   s.requires_arc = true
   s.version = "1.1.1.24"
   s.license = { :type => "MIT", :file => "LICENSE" }

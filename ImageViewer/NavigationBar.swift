@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class NavigationBar: UIView {
     fileprivate var navigationBar: UINavigationBar?
@@ -29,23 +30,22 @@ class NavigationBar: UIView {
 
     private func setup() {
         backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        translatesAutoresizingMaskIntoConstraints = false
         
         navigationBar = { () -> UINavigationBar in
             let navigationBar = UINavigationBar()
             navigationBar.setBackgroundImage(UIImage(), for: .default)
-            navigationBar.translatesAutoresizingMaskIntoConstraints = false
             addSubview(navigationBar)
-            if #available(iOS 11.0, *) {
-                addConstraint(NSLayoutConstraint(item: navigationBar, attribute: .top, relatedBy: .equal, toItem: safeAreaLayoutGuide, attribute: .top, multiplier: 1.0, constant: 0.0))
-            }
-            else {
-                addConstraint(NSLayoutConstraint(item: navigationBar, attribute: .top, relatedBy: .equal, toItem: topAnchor, attribute: .top, multiplier: 1.0, constant: 0.0))
-            }
-            let left = NSLayoutConstraint(item: navigationBar, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 0.0)
-            let right = NSLayoutConstraint(item: navigationBar, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0.0)
-            let bottom = NSLayoutConstraint(item: navigationBar, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-            addConstraints([left, right, bottom])
+            navigationBar.snp.makeConstraints({ (make) in
+                if #available(iOS 11.0, *) {
+                    make.top.equalTo(safeAreaLayoutGuide)
+                }
+                else {
+                    make.top.equalTo(self).offset(UIApplication.shared.keyWindow!.rootViewController!.topLayoutGuide.length)
+                }
+                make.left.equalTo(self)
+                make.right.equalTo(self)
+                make.bottom.equalTo(self)
+            })
             return navigationBar
         }()
     }
@@ -72,6 +72,16 @@ class NavigationBar: UIView {
         navItem.rightBarButtonItems = [actionItem, deleteItem]
         
         navigationBar?.items = [navItem]
+    }
+    
+    func addIn(vc: UIViewController) {
+        vc.view.addSubview(self)
+        self.snp.makeConstraints { (make) in
+            make.left.equalTo(vc.view)
+            make.right.equalTo(vc.view)
+            make.top.equalTo(vc.view)
+        }
+        vc.view.bringSubviewToFront(self)
     }
     
     func switchDisplay() {

@@ -34,28 +34,16 @@ final class ImageViewerPresentationTransition: NSObject, UIViewControllerAnimate
         containerVC.view.addSubview(fadeView)
         containerVC.view.addSubview(imageView)
         
-        
         navigationBar = toVC.navigationBar
         if let navigationBar = navigationBar {
-            containerVC.view.addSubview(navigationBar)
-            let top = NSLayoutConstraint(item: navigationBar, attribute: .top, relatedBy: .equal, toItem: containerVC.view, attribute: .top, multiplier: 1.0, constant: 0.0)
-            let left = NSLayoutConstraint(item: navigationBar, attribute: .left, relatedBy: .equal, toItem: containerVC.view, attribute: .left, multiplier: 1.0, constant: 0.0)
-            let right = NSLayoutConstraint(item: navigationBar, attribute: .right, relatedBy: .equal, toItem: containerVC.view, attribute: .right, multiplier: 1.0, constant: 0.0)
-            containerVC.view.addConstraints([top, left, right])
-            containerVC.view.bringSubviewToFront(navigationBar)
-            navigationBar.alpha = 0.0
+            navigationBar.addIn(vc: containerVC)
+            navigationBar.alpha = 0
         }
-        
         
         bottomToolBar = toVC.bottomToolBar
         if let bottomToolBar = bottomToolBar {
-            containerVC.view.addSubview(bottomToolBar)
-            let left = NSLayoutConstraint(item: bottomToolBar, attribute: .left, relatedBy: .equal, toItem: containerVC.view, attribute: .left, multiplier: 1.0, constant: 0.0)
-            let right = NSLayoutConstraint(item: bottomToolBar, attribute: .right, relatedBy: .equal, toItem: containerVC.view, attribute: .right, multiplier: 1.0, constant: 0.0)
-            let bottom = NSLayoutConstraint(item: bottomToolBar, attribute: .bottom, relatedBy: .equal, toItem: containerVC.view, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-            containerVC.view.addConstraints([left, right, bottom])
-            containerVC.view.bringSubviewToFront(bottomToolBar)
-            bottomToolBar.alpha = 0.0
+            bottomToolBar.addIn(vc: containerVC)
+            bottomToolBar.alpha = 0
         }
         
         toView.frame = containerView.bounds
@@ -85,20 +73,12 @@ final class ImageViewerPresentationTransition: NSObject, UIViewControllerAnimate
             
             toVC.navigationBar = self.navigationBar
             if let navigationBar = toVC.navigationBar {
-                toVC.view.addSubview(navigationBar)
-                let top = NSLayoutConstraint(item: navigationBar, attribute: .top, relatedBy: .equal, toItem: toVC.view, attribute: .top, multiplier: 1.0, constant: 0.0)
-                let left = NSLayoutConstraint(item: navigationBar, attribute: .left, relatedBy: .equal, toItem: toVC.view, attribute: .left, multiplier: 1.0, constant: 0.0)
-                let right = NSLayoutConstraint(item: navigationBar, attribute: .right, relatedBy: .equal, toItem: toVC.view, attribute: .right, multiplier: 1.0, constant: 0.0)
-                toVC.view.addConstraints([top, left, right])
+                navigationBar.addIn(vc: toVC)
             }
             
             toVC.bottomToolBar = self.bottomToolBar
             if let bottomToolBar = toVC.bottomToolBar {
-                toVC.view.addSubview(bottomToolBar)
-                let left = NSLayoutConstraint(item: bottomToolBar, attribute: .left, relatedBy: .equal, toItem: toVC.view, attribute: .left, multiplier: 1.0, constant: 0.0)
-                let right = NSLayoutConstraint(item: bottomToolBar, attribute: .right, relatedBy: .equal, toItem: toVC.view, attribute: .right, multiplier: 1.0, constant: 0.0)
-                let bottom = NSLayoutConstraint(item: bottomToolBar, attribute: .bottom, relatedBy: .equal, toItem: toVC.view, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-                toVC.view.addConstraints([left, right, bottom])
+                bottomToolBar.addIn(vc: toVC)
             }
         })
     }

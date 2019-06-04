@@ -1,22 +1,26 @@
 PODS:
   - PinterestSegment (1.2.3)
+  - SnapKit (4.2.0)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
   - YYImage/Core (1.0.4)
 
 DEPENDENCIES:
   - PinterestSegment (~> 1.2.3)
+  - SnapKit (~> 4.2.0)
   - YYImage (~> 1.0.4)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - PinterestSegment
+    - SnapKit
     - YYImage
 
 SPEC CHECKSUMS:
   PinterestSegment: 3dd673ffd9feb00dc7816bb1e503d70459e8eaa8
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
-PODFILE CHECKSUM: 49a9aeb87e55f294f51eef4501adaaf7fabc5aee
+PODFILE CHECKSUM: 761ea7c8377a42058226898e6eef6731dd7502fb
 
 COCOAPODS: 1.5.3
