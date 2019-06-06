@@ -48,6 +48,10 @@ class BottomToolBar: UIView {
             })
             view.layer.rasterizationScale = UIScreen.main.scale
             view.layer.cornerRadius = 5
+            if #available(iOS 11.0, *) {
+                view.isUserInteractionEnabled = true
+                view.addInteraction(UIDragInteraction(delegate: self))
+            }
             return view
         }()
         urlLabel = { () -> UILabel in
@@ -211,5 +215,14 @@ class BottomToolBar: UIView {
         }
         configuration?.copyUrlButton_action?(configuration?.styleControlIndex)
         
+    }
+}
+extension BottomToolBar: UIDragInteractionDelegate{
+    @available(iOS 11.0, *)
+    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
+        guard let url = urlLabel?.text else { return [] }
+        let provider = NSItemProvider(object: url as NSItemProviderWriting)
+        let item = UIDragItem(itemProvider: provider)
+        return [item]
     }
 }
