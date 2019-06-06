@@ -239,7 +239,13 @@ extension BottomToolBar: UIDragInteractionDelegate{
             view.layer.cornerRadius = 5
             let label = UILabel(frame: self?.urlLabel?.frame ?? CGRect.zero)
             label.textColor = UIColor(red:0.31, green:0.37, blue:0.47, alpha:1.0)
+            label.text = url
+            label.font = label.font.withSize(17.0)
             view.addSubview(label)
+            label.snp.makeConstraints({ (make) in
+                make.center.equalTo(view)
+                make.left.equalTo(view).offset(7.5)
+            })
             return UIDragPreview(view: view)
         }
         return [item]
