@@ -17,6 +17,7 @@ class BottomToolBar: UIView {
     fileprivate var copyUrlButton: UIButton?
     fileprivate var copyMsgLabel: UILabel?
     fileprivate var urlStyleControl: PinterestSegment?
+    fileprivate var urlBackgroundView: UIView?
     
     fileprivate var configuration: ImageViewerConfiguration?
     
@@ -33,7 +34,7 @@ class BottomToolBar: UIView {
     private func setup() {
         backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
-        let urlBackgroundView = { () -> UIView in
+        urlBackgroundView = { () -> UIView in
             let view = UIView()
             view.backgroundColor = UIColor(white: 1.0, alpha: 0.15)
             addSubview(view)
@@ -59,8 +60,10 @@ class BottomToolBar: UIView {
             label.font = label.font.withSize(17.0)
             addSubview(label)
             label.snp.makeConstraints({ (make) in
-                make.center.equalTo(urlBackgroundView)
-                make.left.equalTo(urlBackgroundView).offset(7.5)
+                if let urlBackgroundView = urlBackgroundView {
+                    make.center.equalTo(urlBackgroundView)
+                    make.left.equalTo(urlBackgroundView).offset(7.5)
+                }
             })
             
             label.textColor = .lightGray
@@ -72,8 +75,10 @@ class BottomToolBar: UIView {
             label.font = label.font.withSize(17.0)
             addSubview(label)
             label.snp.makeConstraints({ (make) in
-                make.center.equalTo(urlBackgroundView)
-                make.left.equalTo(urlBackgroundView).offset(7.5)
+                if let urlBackgroundView = urlBackgroundView {
+                    make.center.equalTo(urlBackgroundView)
+                    make.left.equalTo(urlBackgroundView).offset(7.5)
+                }
             })
             
             label.textColor = .lightGray
@@ -87,12 +92,14 @@ class BottomToolBar: UIView {
             button.setImage(UIImage(named: "copy", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
             addSubview(button)
             button.snp.makeConstraints({ (make) in
-                make.left.equalTo(urlBackgroundView.snp.right)
-                make.right.equalTo(self)
-                make.width.equalTo(button.snp.height).multipliedBy(1.5)
-                make.height.equalTo(44)
-                make.bottom.equalTo(urlBackgroundView)
-                make.height.equalTo(urlBackgroundView)
+                if let urlBackgroundView = urlBackgroundView {
+                    make.left.equalTo(urlBackgroundView.snp.right)
+                    make.right.equalTo(self)
+                    make.width.equalTo(button.snp.height).multipliedBy(1.5)
+                    make.height.equalTo(44)
+                    make.bottom.equalTo(urlBackgroundView)
+                    make.height.equalTo(urlBackgroundView)
+                }
             })
             
             button.addTarget(self, action: #selector(copyUrlButton_action), for: .touchUpInside)
@@ -151,15 +158,17 @@ class BottomToolBar: UIView {
             let control = PinterestSegment()
             addSubview(control)
             control.snp.makeConstraints({ (make) in
-                make.bottom.equalTo(urlBackgroundView.snp.top).offset(-20)
-                make.top.equalTo(timeImageView.snp.bottom).offset(10)
-                make.height.equalTo(40)
-                make.right.equalTo(self)
-                if #available(iOS 11.0, *) {
-                    make.left.equalTo(safeAreaLayoutGuide)
-                }
-                else {
-                    make.left.equalTo(self)
+                if let urlBackgroundView = urlBackgroundView {
+                    make.bottom.equalTo(urlBackgroundView.snp.top).offset(-20)
+                    make.top.equalTo(timeImageView.snp.bottom).offset(10)
+                    make.height.equalTo(40)
+                    make.right.equalTo(self)
+                    if #available(iOS 11.0, *) {
+                        make.left.equalTo(safeAreaLayoutGuide)
+                    }
+                    else {
+                        make.left.equalTo(self)
+                    }
                 }
             })
             
@@ -223,6 +232,16 @@ extension BottomToolBar: UIDragInteractionDelegate{
         guard let url = urlLabel?.text else { return [] }
         let provider = NSItemProvider(object: url as NSItemProviderWriting)
         let item = UIDragItem(itemProvider: provider)
+        item.previewProvider = { [weak self] in
+            let view = UIView(frame: self?.urlBackgroundView?.frame ?? CGRect.zero)
+            view.backgroundColor = .white
+            view.layer.rasterizationScale = UIScreen.main.scale
+            view.layer.cornerRadius = 5
+            let label = UILabel(frame: self?.urlLabel?.frame ?? CGRect.zero)
+            label.textColor = UIColor(red:0.31, green:0.37, blue:0.47, alpha:1.0)
+            view.addSubview(label)
+            return UIDragPreview(view: view)
+        }
         return [item]
     }
 }
