@@ -6,6 +6,9 @@ public final class ImageViewerController: UIViewController {
     @IBOutlet fileprivate var scrollView: UIScrollView!
     @IBOutlet fileprivate var imageView: YYAnimatedImageView!
     @IBOutlet fileprivate var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var errorImageView: UIImageView!
+    @IBOutlet weak var errorMessageView: UIView!
+    @IBOutlet weak var errorMessageLabel: UILabel!
     var navigationBar: NavigationBar?
     var bottomToolBar: BottomToolBar?
     
@@ -39,6 +42,7 @@ public final class ImageViewerController: UIViewController {
         setupGestureRecognizers()
         setupTransitions()
         setupActivityIndicator()
+        setupErrorMessage()
     }
 }
 
@@ -63,24 +67,24 @@ extension ImageViewerController: UIGestureRecognizerDelegate {
 }
 
 private extension ImageViewerController {
-    func setupNavigationBar() {
+    private func setupNavigationBar() {
         navigationBar = NavigationBar(configuration: configuration)
         navigationBar?.closeItemAction = { [weak self] in
             self?.dismiss(animated: true, completion: nil)
         }
     }
     
-    func setupBottomToolBar() {
+    private func setupBottomToolBar() {
         bottomToolBar = BottomToolBar(configuration: configuration)
     }
     
-    func setupScrollView() {
+    private func setupScrollView() {
         scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
         scrollView.alwaysBounceVertical = true
         scrollView.alwaysBounceHorizontal = true
     }
     
-    func setupGestureRecognizers() {
+    private func setupGestureRecognizers() {
         let tapGestureRecognizer = UITapGestureRecognizer()
         tapGestureRecognizer.numberOfTapsRequired = 1
         tapGestureRecognizer.addTarget(self, action: #selector(imageViewTapped(_:)))
@@ -99,17 +103,24 @@ private extension ImageViewerController {
         imageView.addGestureRecognizer(panGestureRecognizer)
     }
     
-    func setupTransitions() {
+    private func setupTransitions() {
         guard let imageView = configuration?.imageView else { return }
         transitionHandler = ImageViewerTransitioningHandler(fromImageView: imageView, toImageView: self.imageView, configuration: configuration)
         transitioningDelegate = transitionHandler
     }
     
-    func setupActivityIndicator() {
+    private func setupActivityIndicator() {
         guard let block = configuration?.imageBlock else { return }
         activityIndicator.startAnimating()
         block { [weak self] image in
-            guard let image = image else { return }
+            guard let image = image else {
+                DispatchQueue.main.async {
+                    self?.activityIndicator.stopAnimating()
+                    self?.errorImageView.isHidden = false
+                    self?.errorMessageView.isHidden = false
+                }
+                return
+            }
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 if let imageView = self?.imageView {
@@ -119,6 +130,21 @@ private extension ImageViewerController {
                 }
             }
         }
+    }
+    
+    private func setupErrorMessage() {
+        errorImageView.isHidden = true
+        errorMessageView.isHidden = true
+        
+        errorMessageView.layer.rasterizationScale = UIScreen.main.scale
+        errorMessageView.layer.cornerRadius = 5
+        errorMessageView.layer.shadowColor = UIColor.black.cgColor
+        errorMessageView.layer.shadowOffset = .zero
+        errorMessageView.layer.shadowRadius = 2
+        errorMessageView.layer.shadowOpacity = 0.5
+        errorMessageView.layer.shouldRasterize = true
+        errorMessageView.layer.rasterizationScale = UIScreen.main.scale
+        errorMessageLabel.text = configuration?.errorMessage
     }
     
     @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {

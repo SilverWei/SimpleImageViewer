@@ -13,6 +13,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageViewerController" customModule="SimpleImageViewer" customModuleProvider="target">
             <connections>
                 <outlet property="activityIndicator" destination="oPl-2f-Knx" id="GOD-eG-o96"/>
+                <outlet property="errorImageView" destination="Gmd-Hl-DAA" id="JEU-aK-b4K"/>
+                <outlet property="errorMessageLabel" destination="ukg-NT-nRF" id="coa-eZ-4YU"/>
+                <outlet property="errorMessageView" destination="SX2-yr-2sX" id="unE-8h-OjS"/>
                 <outlet property="imageView" destination="rHA-5m-kkS" id="V86-k1-pPH"/>
                 <outlet property="scrollView" destination="cQD-2Q-pvo" id="M6k-QU-OVY"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bEt-1B-b5l"/>
@@ -44,20 +47,49 @@
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="oPl-2f-Knx">
                     <rect key="frame" x="169" y="315" width="37" height="37"/>
                 </activityIndicatorView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="error" translatesAutoresizingMaskIntoConstraints="NO" id="Gmd-Hl-DAA">
+                    <rect key="frame" x="135" y="286.5" width="105" height="94"/>
+                </imageView>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SX2-yr-2sX">
+                    <rect key="frame" x="148.5" y="390.5" width="78" height="40.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="— —" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukg-NT-nRF">
+                            <rect key="frame" x="20" y="10" width="38" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ukg-NT-nRF" firstAttribute="centerY" secondItem="SX2-yr-2sX" secondAttribute="centerY" id="Way-Rb-lLn"/>
+                        <constraint firstItem="ukg-NT-nRF" firstAttribute="top" secondItem="SX2-yr-2sX" secondAttribute="top" constant="10" id="XHL-FM-VbH"/>
+                        <constraint firstItem="ukg-NT-nRF" firstAttribute="leading" secondItem="SX2-yr-2sX" secondAttribute="leading" constant="20" id="gZU-Aj-4fl"/>
+                        <constraint firstItem="ukg-NT-nRF" firstAttribute="centerX" secondItem="SX2-yr-2sX" secondAttribute="centerX" id="xxR-t1-K5A"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="oPl-2f-Knx" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="4hr-Ua-OMa"/>
+                <constraint firstItem="SX2-yr-2sX" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="9AQ-DL-She"/>
                 <constraint firstItem="cQD-2Q-pvo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ErM-q5-uey"/>
                 <constraint firstItem="rHA-5m-kkS" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="Zh5-4A-UbJ"/>
                 <constraint firstAttribute="trailing" secondItem="cQD-2Q-pvo" secondAttribute="trailing" id="fiR-iH-AGe"/>
                 <constraint firstAttribute="bottom" secondItem="cQD-2Q-pvo" secondAttribute="bottom" id="kQk-Ie-iGl"/>
                 <constraint firstItem="oPl-2f-Knx" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="lBh-77-nAV"/>
                 <constraint firstItem="cQD-2Q-pvo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lTy-Fb-3fn"/>
+                <constraint firstItem="SX2-yr-2sX" firstAttribute="top" secondItem="Gmd-Hl-DAA" secondAttribute="bottom" constant="10" id="nWf-2Z-8hN"/>
+                <constraint firstItem="Gmd-Hl-DAA" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="o6k-Zm-zZE"/>
+                <constraint firstItem="Gmd-Hl-DAA" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="smb-Hf-9jG"/>
                 <constraint firstItem="rHA-5m-kkS" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="tGF-Ia-4A0"/>
+                <constraint firstItem="Q91-AY-cZC" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SX2-yr-2sX" secondAttribute="trailing" constant="20" id="zkv-Hl-qgn"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q91-AY-cZC"/>
-            <point key="canvasLocation" x="80" y="114"/>
+            <point key="canvasLocation" x="79.200000000000003" y="113.79310344827587"/>
         </view>
     </objects>
+    <resources>
+        <image name="error" width="105" height="94"/>
+    </resources>
 </document>
