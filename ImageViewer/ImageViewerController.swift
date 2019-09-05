@@ -111,7 +111,7 @@ private extension ImageViewerController {
     
     private func setupActivityIndicator() {
         activityIndicator.startAnimating()
-        imageView.yy_setImage(with: URL(string: configuration?.imageUrl ?? ""), placeholder: nil, options: [.progressiveBlur, .setImageWithFadeAnimation]) { [weak self] (image, url, fromType, stage, error) in
+        imageView.yy_setImage(with: URL(string: configuration?.imageUrl ?? ""), placeholder: configuration?.imageView?.image ?? configuration?.image, options: [.progressiveBlur, .setImageWithFadeAnimation]) { [weak self] (image, url, fromType, stage, error) in
             self?.activityIndicator.stopAnimating()
             if image == nil {
                 self?.errorImageView.isHidden = false
