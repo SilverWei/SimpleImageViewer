@@ -187,7 +187,7 @@ private extension ImageViewerController {
     }
 }
 public extension ImageViewerController {
-    func set(imageUrl: String) {
-        bottomToolBar?.urlLabel?.text = imageUrl
+    func set(copyUrl: String) {
+        bottomToolBar?.urlLabel?.text = copyUrl
     }
 }

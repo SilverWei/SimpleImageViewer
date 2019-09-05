@@ -63,7 +63,7 @@ class BottomToolBar: UIView {
             })
             
             label.textColor = .lightGray
-            label.text = configuration?.imageUrl ?? ""
+            label.text = configuration?.copyUrl ?? ""
             return label
         }()
         copyMsgLabel = { () -> UILabel in

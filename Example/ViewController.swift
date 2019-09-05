@@ -49,7 +49,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             config.size = "5120 x 2880 (5 MB)"
             config.styleControlIndex = 0
             config.styleControlTitles = ["title0", "title1", "title2"]
-            config.imageUrl = "https://i.loli.net/2019/07/08/5d22d5f0ecf2962135.jpg"
+            config.copyUrl = "https://i.loli.net/2019/07/08/5d22d5f0ecf2962135.jpg"
             config.copyMsgText = "已复制进剪贴板"
         }
         
