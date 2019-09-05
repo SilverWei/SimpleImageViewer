@@ -1,6 +1,6 @@
 import UIKit
 import AVFoundation
-import YYImage
+import YYWebImage
 
 public final class ImageViewerController: UIViewController {
     @IBOutlet fileprivate var scrollView: UIScrollView!
@@ -110,24 +110,14 @@ private extension ImageViewerController {
     }
     
     private func setupActivityIndicator() {
-        guard let block = configuration?.imageBlock else { return }
         activityIndicator.startAnimating()
-        block { [weak self] image in
-            guard let image = image else {
-                DispatchQueue.main.async {
-                    self?.activityIndicator.stopAnimating()
-                    self?.errorImageView.isHidden = false
-                    self?.errorMessageView.isHidden = false
-                }
-                return
+        imageView.yy_setImage(with: URL(string: configuration?.imageUrl ?? ""), placeholder: nil, options: [.progressiveBlur, .setImageWithFadeAnimation]) { [weak self] (image, url, fromType, stage, error) in
+            self?.activityIndicator.stopAnimating()
+            if image == nil {
+                self?.errorImageView.isHidden = false
+                self?.errorMessageView.isHidden = false
             }
-            DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
-                if let imageView = self?.imageView {
-                    UIView.transition(with: imageView, duration: 0.25, options: .transitionCrossDissolve, animations: {
-                        imageView.image = image
-                    }, completion: nil)
-                }
+            else {
             }
         }
     }

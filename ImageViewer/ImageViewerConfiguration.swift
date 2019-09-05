@@ -1,14 +1,10 @@
 import Foundation
 import UIKit
-import YYImage
-
-public typealias ImageCompletion = (YYImage?) -> Void
-public typealias ImageBlock = (@escaping ImageCompletion) -> Void
+import YYWebImage
 
 public final class ImageViewerConfiguration {
     public var image: YYImage?
     public var imageView: YYAnimatedImageView?
-    public var imageBlock: ImageBlock?
     public var actionItem_action: ((UIBarButtonItem) -> Void)?
     public var deleteItem_action: ((UIBarButtonItem) -> Void)?
     public var styleControlTitles: [String]?
