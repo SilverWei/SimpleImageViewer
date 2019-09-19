@@ -2,22 +2,25 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "形状.png",
+      "filename" : "trash.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "形状@2x.png",
+      "filename" : "trash@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "形状@3x.png",
+      "filename" : "trash@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
   }
 }

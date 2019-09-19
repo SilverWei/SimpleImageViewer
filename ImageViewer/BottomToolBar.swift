@@ -85,7 +85,7 @@ class BottomToolBar: UIView {
         }()
         let copyUrlButton = { () -> UIButton in
             let button = UIButton(type: .custom)
-            button.setImage(UIImage(named: "copy", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
+            button.setImage(UIImage(named: "link", in: Bundle(for: type(of: self)), compatibleWith: nil)?.yy_image(byTintColor: .white), for: .normal)
             addSubview(button)
             button.snp.makeConstraints({ (make) in
                 if let urlBackgroundView = urlBackgroundView {

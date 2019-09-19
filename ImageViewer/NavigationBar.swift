@@ -60,7 +60,7 @@ class NavigationBar: UIView {
         navItem.leftBarButtonItems = [backItem]
         
         let deleteItem = { () -> UIBarButtonItem in
-            let item = UIBarButtonItem(image: UIImage(named: "ic_delete", in: Bundle(for: type(of: self)), compatibleWith: nil), style: .plain, target: self, action: #selector(deleteItem_action(_:)))
+            let item = UIBarButtonItem(image: UIImage(named: "trash", in: Bundle(for: type(of: self)), compatibleWith: nil), style: .plain, target: self, action: #selector(deleteItem_action(_:)))
             item.tintColor = .white
             return item
         }()
