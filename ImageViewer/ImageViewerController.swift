@@ -111,6 +111,7 @@ private extension ImageViewerController {
     
     private func setupActivityIndicator() {
         activityIndicator.startAnimating()
+        navigationBar?.actionItem?.isEnabled = false
         imageView.yy_setImage(with: URL(string: configuration?.imageUrl ?? ""), placeholder: configuration?.imageView?.image ?? configuration?.image, options: [.progressiveBlur, .setImageWithFadeAnimation]) { [weak self] (image, url, fromType, stage, error) in
             self?.activityIndicator.stopAnimating()
             if image == nil {
@@ -118,6 +119,7 @@ private extension ImageViewerController {
                 self?.errorMessageView.isHidden = false
             }
             else {
+                self?.navigationBar?.actionItem?.isEnabled = true
             }
         }
     }

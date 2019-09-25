@@ -12,6 +12,7 @@ import SnapKit
 class NavigationBar: UIView {
     fileprivate var navigationBar: UINavigationBar?
     fileprivate weak var superView: UIView?
+    public weak var actionItem: UIBarButtonItem?
     
     fileprivate var configuration: ImageViewerConfiguration?
     
@@ -64,7 +65,7 @@ class NavigationBar: UIView {
             item.tintColor = .white
             return item
         }()
-        let actionItem = { () -> UIBarButtonItem in
+        actionItem = { () -> UIBarButtonItem in
             let item = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionItem_action(_:)))
             item.tintColor = .white
             return item
