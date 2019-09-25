@@ -60,17 +60,22 @@ class NavigationBar: UIView {
         }()
         navItem.leftBarButtonItems = [backItem]
         
+        var items: [UIBarButtonItem] = []
         let deleteItem = { () -> UIBarButtonItem in
             let item = UIBarButtonItem(image: UIImage(named: "trash", in: Bundle(for: type(of: self)), compatibleWith: nil), style: .plain, target: self, action: #selector(deleteItem_action(_:)))
             item.tintColor = .white
             return item
         }()
+        items.append(deleteItem)
         actionItem = { () -> UIBarButtonItem in
             let item = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionItem_action(_:)))
             item.tintColor = .white
             return item
         }()
-        navItem.rightBarButtonItems = [actionItem, deleteItem]
+        if let actionItem = actionItem {
+            items.append(actionItem)
+        }
+        navItem.rightBarButtonItems = items
         
         navigationBar?.items = [navItem]
     }
